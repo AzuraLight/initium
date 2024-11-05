@@ -1,6 +1,11 @@
 import mdiIcons from '@/assets/icons/mdi.js';
 import { defineStore } from 'pinia';
 
+const defaultChildIcon = mdiIcons.point;
+
+console.log("mdiIcons.point:", mdiIcons.point)
+console.log('defaultChildIcon', defaultChildIcon);
+
 export const useMenuStore = defineStore('menu', {
     state: () => ({
         menuItems: [
@@ -17,7 +22,7 @@ export const useMenuStore = defineStore('menu', {
         ],
     }),
     actions: {
-        addDefaultChildIcon(items, defaultIcon) {
+        addDefaultChildIcon(items, defaultIcon = defaultChildIcon) {
             items.forEach(item => {
                 if (item.items) {
                     this.addDefaultChildIcon(item.items, defaultIcon);

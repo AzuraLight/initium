@@ -110,6 +110,7 @@ export default {
         };
 
         onMounted(() => {
+            menuStore.addDefaultChildIcon(menuStore.menuItems);
             window.addEventListener('resize', handleResize);
             handleResize();
         });
@@ -273,7 +274,8 @@ export default {
 }
 
 .nav-group-items {
-    padding-left: 20px;
+    margin-top: 2%;
+    padding-left: 0px;
 }
 
 .nav-item {
@@ -281,7 +283,7 @@ export default {
 }
 
 .text-subItem {
-    margin-left: 10%;
+    margin-left: 24px;
 }
 
 .logo-text {

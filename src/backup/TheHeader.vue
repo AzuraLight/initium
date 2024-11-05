@@ -2,15 +2,18 @@
     <div>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar w-100">
-            <svg width="24" height="24" viewBox="0 0 24 24" @click="toggleSidebar" class="menu-icon">
-                <path :d="mdiMenu"></path>
-            </svg>
+            <button @click="toggleSidebar" class="navbar-toggler sidebar-toggle" type="button">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path :d="mdiMenu"></path>
+                </svg>
+            </button>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse justify-content-end" id="nav-collapse">
+                <!-- Dropdown Menu Items -->
                 <ul class="navbar-nav ml-auto">
                     <li v-for="item in dropdownMenuItems" :key="item.name" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -182,11 +185,6 @@ export default {
 
 
 <style scoped>
-
-.menu-icon{
-    cursor: pointer;
-}
-
 .custom-navbar {
     height: 56px;
 }
