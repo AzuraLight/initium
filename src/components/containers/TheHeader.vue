@@ -182,8 +182,7 @@ export default {
 
 
 <style scoped>
-
-.menu-icon{
+.menu-icon {
     cursor: pointer;
 }
 
@@ -207,6 +206,14 @@ export default {
     background-color: #373956 !important;
     color: #fff !important;
     border-radius: 5px;
+    width: 90%;
+    margin: auto;
+}
+
+.navbar-nav .dropdown-menu {
+    right: 0;
+    left: auto;
+    transform: translateX(-1%);
 }
 
 .sidebar-toggle {
@@ -230,6 +237,10 @@ export default {
     margin-top: 0px;
 }
 
+.breadcrumb-item a {
+    text-decoration: none;
+}
+
 @media (max-width: 1200px) {
     .nav-link {
         font-size: 0.9rem;
@@ -237,6 +248,11 @@ export default {
 
     .custom-navbar {
         padding: 0 10px;
+    }
+
+    .navbar-nav .dropdown-menu {
+        transform: translateX(-20%);
+
     }
 
     .breadcrumbs-container>nav {

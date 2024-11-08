@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 
 import TheContainer from '@/components/containers/TheContainer';
 import Home from '@/view/dashboard/Home';
@@ -36,6 +37,17 @@ function configRougtes() {
 const router = createRouter({
   history: createWebHistory(process.env.VUE_APP_BASE_URL || '/'),
   routes: configRougtes(),
+});
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  const isAuthenticated = !!userStore.user;
+
+  if (to.name !== 'Login' && !isAuthenticated) {
+    next({ name: 'Login' });
+  } else {
+    next();
+  }
 });
 
 export default router;
