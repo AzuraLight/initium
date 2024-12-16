@@ -1,6 +1,6 @@
 <template>
     <div :class="['sidebar', { 'is-collapsed': !isSidebarActive }]">
-        <div v-show="isSidebarActive" class="collapse-container">
+        <div v-if="isSidebarActive" class="collapse-container">
             <!-- Logo Box -->
             <div class="logo-box">
                 <router-link :to="alternativeLogo.link" class="d-flex align-items-center alt-logo">
@@ -12,14 +12,14 @@
 
             <div class="logo-line"></div>
 
-            <!-- Navigation Box -->
+            <!-- Navigation Menu -->
             <div class="nav-scrollable-container">
                 <div class="nav-container mt-4">
                     <template v-for="(item, key) in menuItems" :key="key">
                         <div v-if="item.type === 'title'" class="nav-title">
                             {{ item.name }}
                         </div>
-                        <div v-else-if="item.items" :key="item.name + '-group'" class="nav-group mb-3">
+                        <div v-else-if="item.items" class="nav-group">
                             <div class="nav-link nav-group-toggle" @click="toggleCollapse(key)">
                                 <svg :width="24" :height="24" viewBox="0 0 24 24" class="me-4"
                                     :fill="isActiveRoute(item) ? 'white' : 'grey'">
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="nav-item mb-3">
+                        <div v-else class="nav-item">
                             <router-link :to="item.to" class="nav-link d-flex align-items-center">
                                 <svg :width="24" :height="24" viewBox="0 0 24 24" class="me-4"
                                     :fill="isActiveRoute(item) ? 'white' : 'grey'">
@@ -62,7 +62,7 @@
 import mdiIcons from '@/assets/icons/mdi.js';
 import { useMenuStore } from '@/stores/menuStore';
 import { useSidebarStore } from '@/stores/sidebarStore';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default {
@@ -84,6 +84,17 @@ export default {
             link: '/',
         }));
 
+        const toggleCollapse = (key) => {
+            isExpanded.value[key] = !isExpanded.value[key];
+        };
+
+        const isActiveRoute = (item) => {
+            const currentPath = route.path;
+            return item.items
+                ? item.items.some(subItem => currentPath.startsWith(subItem.to))
+                : currentPath === item.to;
+        };
+
         const handleLogoError = () => {
             logoLoadError.value = true;
         };
@@ -92,45 +103,18 @@ export default {
             logoLoaded.value = true;
         };
 
-        const toggleCollapse = (key) => {
-            isExpanded.value[key] = !isExpanded.value[key];
-        };
-
-        const isActiveRoute = (item) => {
-            const currentPath = route.path;
-            if (item.items) {
-                return item.items.some(subItem => currentPath.startsWith(subItem.to));
-            }
-            return currentPath === item.to;
-        };
-
-        const handleResize = () => {
-            const scaleFactor = window.devicePixelRatio;
-            sidebarStore.setSidebar(scaleFactor < 2);
-        };
-
-        onMounted(() => {
-            menuStore.addDefaultChildIcon(menuStore.menuItems);
-            window.addEventListener('resize', handleResize);
-            handleResize();
-        });
-
-        onBeforeUnmount(() => {
-            window.removeEventListener('resize', handleResize);
-        });
-
         return {
             isSidebarActive,
             menuItems,
-            alternativeLogo,
             mdiIcons,
-            logoLoadError,
-            logoLoaded,
             isExpanded,
-            handleLogoError,
-            handleLogoLoad,
             toggleCollapse,
             isActiveRoute,
+            alternativeLogo,
+            logoLoadError,
+            logoLoaded,
+            handleLogoError,
+            handleLogoLoad,
         };
     },
 };
@@ -291,5 +275,13 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 200px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 </style>

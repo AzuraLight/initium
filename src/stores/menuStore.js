@@ -3,15 +3,13 @@ import { defineStore } from 'pinia';
 
 const defaultChildIcon = mdiIcons.point;
 
-console.log("mdiIcons.point:", mdiIcons.point)
-console.log('defaultChildIcon', defaultChildIcon);
-
 export const useMenuStore = defineStore('menu', {
     state: () => ({
         menuItems: [
             {
                 name: '대시보드',
                 icon: mdiIcons.home,
+                to: '/dashboard',
                 items: [
                     {
                         name: '샘플',
@@ -22,9 +20,10 @@ export const useMenuStore = defineStore('menu', {
             {
                 name: '차트',
                 icon: mdiIcons.chart,
-                to: '/chart'
-            }
+                to: '/chart',
+            },
         ],
+
     }),
     actions: {
         addDefaultChildIcon(items, defaultIcon = defaultChildIcon) {
