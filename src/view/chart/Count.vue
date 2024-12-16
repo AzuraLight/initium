@@ -1,11 +1,11 @@
 <template>
     <div>
-        sample page
+        이게 뭐임?
     </div>
 </template>
 
 <script>
 export default {
-    name: "HomePage",
+    name: "CountChart",
 }
 </script>

@@ -1,54 +1,43 @@
 <template>
     <div>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar w-100">
-            <svg width="24" height="24" viewBox="0 0 24 24" @click="toggleSidebar" class="menu-icon">
-                <path :d="mdiMenu"></path>
-            </svg>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+            <div class="container-fluid d-flex align-items-center justify-content-between">
+                <!-- Left: Sidebar Toggle -->
+                <div class="d-flex align-items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" @click="toggleSidebar" class="menu-icon">
+                        <path :d="mdiMenu"></path>
+                    </svg>
+                </div>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-collapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <!-- Center: Menu Links -->
+                <div class="collapse navbar-collapse justify-content-center" id="nav-collapse">
+                    <ul class="navbar-nav">
+                        <li v-for="item in regularMenuItems" :key="item.name" class="nav-item">
+                            <router-link :to="item.to" class="nav-link" :class="{ 'active-link': isActiveRoute(item) }">
+                                {{ item.name }}
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="collapse navbar-collapse justify-content-end" id="nav-collapse">
-                <ul class="navbar-nav ml-auto">
-                    <li v-for="item in dropdownMenuItems" :key="item.name" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            {{ item.name }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li v-for="subItem in item.items" :key="subItem.name">
-                                <router-link :to="subItem.to" class="dropdown-item"
-                                    :class="{ 'active-link': isActiveRoute(subItem) }">
-                                    {{ subItem.name }}
-                                </router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Regular Menu Items -->
-                    <li v-for="item in regularMenuItems" :key="item.name" class="nav-item">
-                        <router-link :to="item.to" class="nav-link" :class="{ 'active-link': isActiveRoute(item) }"
-                            exact>
-                            {{ item.name }}
-                        </router-link>
-                    </li>
-                </ul>
-
-                <!-- User Profile Section -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> {{ userName }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" @click="logout">
-                                    <i class="fas fa-arrow-right-from-bracket"></i> 로그아웃
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <!-- Right: User Profile -->
+                <div class="d-flex align-items-center">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <i class="fas fa-user"></i> {{ userName }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" @click="logout">
+                                        <i class="fas fa-arrow-right-from-bracket"></i> 로그아웃
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -64,41 +53,9 @@
             </nav>
             <div class="breadcrumbs-line"></div>
         </div>
-
-        <!-- Sidebar -->
-        <div :class="['sidebar', { 'is-collapsed': !isSidebarActive }]">
-            <div v-show="isSidebarActive" class="collapse-container">
-                <!-- Sidebar Navigation -->
-                <div class="nav-scrollable-container">
-                    <div class="nav-container mt-4">
-                        <template v-for="(item, key) in dropdownMenuItems" :key="key">
-                            <div v-if="item.items" class="nav-group mb-3">
-                                <div class="nav-link nav-group-toggle" @click="toggleCollapse(key)">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" class="me-4"
-                                        :fill="isActiveRoute(item) ? 'white' : 'grey'">
-                                        <path :d="item.icon || mdiMenu"></path>
-                                    </svg>
-                                    <span class="text-white">{{ item.name }}</span>
-                                </div>
-                                <div v-show="isExpanded[key]" class="nav-group-items">
-                                    <div v-for="subItem in item.items" :key="subItem.name" class="nav-item">
-                                        <router-link :to="subItem.to" class="nav-link d-flex align-items-center">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" class="me-4"
-                                                :fill="isActiveRoute(subItem) ? 'white' : 'grey'">
-                                                <path :d="mdiMenu"></path>
-                                            </svg>
-                                            <span>{{ subItem.name }}</span>
-                                        </router-link>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
+
 
 <script>
 import { useMenuStore } from '@/stores/menuStore';

@@ -17,8 +17,13 @@ export const useMenuStore = defineStore('menu', {
                         name: '샘플',
                         to: '/home',
                     },
-                ]
+                ],
             },
+            {
+                name: '차트',
+                icon: mdiIcons.chart,
+                to: '/chart'
+            }
         ],
     }),
     actions: {

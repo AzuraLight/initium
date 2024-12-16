@@ -3,6 +3,7 @@ import { useUserStore } from '@/stores/userStore';
 
 import TheContainer from '@/components/containers/TheContainer';
 import Home from '@/view/dashboard/Home';
+import Chart from '@/view/chart/Count'
 import Auth from '@/view/user/Auth';
 
 function configRougtes() {
@@ -28,6 +29,11 @@ function configRougtes() {
           path: 'home',
           name: 'Home',
           component: Home,
+        },
+        {
+          path: 'chart',
+          name: 'Chart',
+          component: Chart,
         }
       ],
     }

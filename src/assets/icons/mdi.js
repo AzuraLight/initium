@@ -2,7 +2,8 @@ import {
     mdiHome,
     mdiMenu,
     mdiChevronDown, mdiChevronUp,
-    mdiVectorPoint
+    mdiVectorPoint,
+    mdiChartLine
 } from '@mdi/js';
 
 const mdiIcons = {
@@ -11,6 +12,7 @@ const mdiIcons = {
     chevronDown: mdiChevronDown,
     chevronUp: mdiChevronUp,
     point: mdiVectorPoint,
+    chart: mdiChartLine
 };
 
 export default mdiIcons;
