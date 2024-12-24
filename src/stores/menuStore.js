@@ -9,7 +9,7 @@ export const useMenuStore = defineStore('menu', {
             {
                 name: '대시보드',
                 icon: mdiIcons.home,
-                to: '/dashboard',
+                to: '/home',
                 items: [
                     {
                         name: '샘플',

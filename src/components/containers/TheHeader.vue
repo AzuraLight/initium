@@ -68,7 +68,7 @@
         </nav>
 
         <!-- Breadcrumb Section -->
-        <div class="breadcrumbs-container bg-light shadow-sm rounded mt-2 px-3 py-2">
+        <div class="breadcrumbs-container rounded mt-2 px-3 py-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li v-for="(item, index) in breadcrumbItems" :key="index" class="breadcrumb-item">
@@ -83,14 +83,16 @@
 <script>
 import { useMenuStore } from '@/stores/menuStore';
 import { useSidebarStore } from '@/stores/sidebarStore';
+import { useUserStore } from '@/stores/userStore';
 import { mdiMenu } from '@mdi/js';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
-    name: 'ModernHeader',
+    name: 'TheHeader',
     setup() {
         const menuStore = useMenuStore();
+        const userStore = useUserStore();
         const sidebarStore = useSidebarStore();
         const route = useRoute();
         const router = useRouter();
@@ -110,6 +112,32 @@ export default {
         // 사이드바 토글
         const toggleSidebar = () => sidebarStore.toggleSidebar();
 
+        // 브레드크럼
+        const breadcrumbItems = computed(() => {
+            const breadcrumb = [];
+            const parentItems = menuItems.value.filter(item => item.items && item.items.some(subItem => subItem.to === route.path));
+            parentItems.forEach(item => {
+                breadcrumb.push({
+                    route: item.to,
+                    text: item.name,
+                });
+                if (item.items) {
+                    item.items.forEach(subItem => {
+                        if (subItem.to === route.path) {
+                            breadcrumb.push({
+                                route: subItem.to,
+                                text: subItem.name,
+                            });
+                        }
+                    });
+                }
+            });
+            return breadcrumb;
+        });
+
+        // 유저 이름
+        const userName = computed(() => userStore.user?.name || 'Guest');
+
         // 로그아웃 처리
         const logout = async () => {
             await router.push({ path: '/login' });
@@ -118,6 +146,8 @@ export default {
         return {
             mdiMenu,
             menuItems,
+            userName,
+            breadcrumbItems,
             isActiveRoute,
             toggleSidebar,
             logout,
