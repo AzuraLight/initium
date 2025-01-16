@@ -2,9 +2,7 @@
     <div :class="['sidebar', { 'is-collapsed': !isSidebarActive }]">
         <!-- Collapse Button -->
         <div class="collapse-button" @click="toggleSidebar">
-            <svg class="icon" viewBox="0 0 24 24">
-                <path :d="isSidebarActive ? mdiIcons.chevronLeft : mdiIcons.chevronRight"></path>
-            </svg>
+            <span style="color:#fff">Initium</span>
         </div>
 
         <div class="nav-scrollable-container">

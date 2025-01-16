@@ -2,6 +2,7 @@ import {
     mdiHome,
     mdiMenu,
     mdiChevronDown, mdiChevronUp,
+    mdiChevronRight, mdiChevronLeft,
     mdiVectorPoint,
     mdiChartLine,
     mdiCrownCircle,
@@ -15,6 +16,8 @@ const mdiIcons = {
     point: mdiVectorPoint,
     chart: mdiChartLine,
     crown: mdiCrownCircle,
+    right: mdiChevronRight,
+    left: mdiChevronLeft
 };
 
 export default mdiIcons;

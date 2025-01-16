@@ -100,6 +100,10 @@ export default {
     background: transparent;
 }
 
+.container-fluid.sidebar-collapsed .content-wrapper {
+    margin-left: 64px; /* 접힌 사이드바 너비 */
+}
+
 @media (max-width: 768px) {
     .content-wrapper {
         margin-left: 0;
